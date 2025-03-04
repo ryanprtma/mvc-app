@@ -26,7 +26,7 @@ class Router
 
     public static function run(): void
     {
-        $path = '/';
+        $path = "/";
         if (isset($_SERVER['PATH_INFO'])) {
             $path = $_SERVER['PATH_INFO'];
         }

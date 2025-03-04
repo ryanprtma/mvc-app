@@ -7,4 +7,12 @@ class View
     {
         require __DIR__ . '/../View/' . $view . '.php';
     }
+
+    public static function redirect(string $url): void
+    {
+        header("Location: $url");
+        if (getenv("mode") != "test") {
+            exit();
+        }
+    }
 }
