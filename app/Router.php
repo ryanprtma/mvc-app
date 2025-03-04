@@ -12,6 +12,7 @@ class Router
         string $path,
         string $controller,
         string $function,
+        array $middlewares = []
     ): void
     {
         self::$routes[] = [
@@ -19,6 +20,7 @@ class Router
             'path' => $path,
             'controller' => $controller,
             'function' => $function,
+            'middlewares' => $middlewares
         ];
     }
 
@@ -33,6 +35,12 @@ class Router
 
         foreach (self::$routes as $route) {
             if ($path == $route['path'] && $method == $route['method']) {
+
+                foreach ($route['middlewares'] as $middleware){
+                    $instance = new $middleware;
+                    $instance->before();
+                }
+
                 $function = $route['function'];
 
                 $controller = new $route['controller'];
