@@ -20,6 +20,15 @@ class User extends Model
         return $this;
     }
 
+    public function updateProfile(): User
+    {
+        $statement = $this->connection->prepare("UPDATE users SET name = ?, username = ? WHERE id = ?");
+        $statement->execute([
+            $this->name, $this->username, $this->id
+        ]);
+        return $this;
+    }
+
     public function update(): User
     {
         $statement = $this->connection->prepare("UPDATE users SET name = ?, password = ? WHERE id = ?");

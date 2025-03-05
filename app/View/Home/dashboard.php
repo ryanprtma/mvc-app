@@ -76,6 +76,7 @@
         <div class="col-lg-5">
             <div class="form-container">
                 <a href="/character/form" class="btn btn-primary">Intermezzo</a>
+                <a href="/users/edit" class="btn btn-primary">Update Profile</a>
                 <a href="/users/logout" class="btn btn-danger">Logout</a>
             </div>
         </div>

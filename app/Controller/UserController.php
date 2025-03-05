@@ -4,7 +4,6 @@ namespace Ryanprtma\MvcApp\Controller;
 
 use Ryanprtma\MvcApp\Base\Controller;
 use Ryanprtma\MvcApp\Base\View;
-use Ryanprtma\MvcApp\Common\Session;
 use Ryanprtma\MvcApp\Config\Database;
 use Ryanprtma\MvcApp\Exception\ValidationException;
 use Ryanprtma\MvcApp\Model\User;
@@ -52,6 +51,43 @@ class UserController extends Controller
             View::render('User/register', [
                 'title' => 'Register new User',
                 'error' => $exception->getMessage()
+            ]);
+        }
+    }
+
+    public function edit(): void
+    {
+        $user = $this->session->current();
+        $this->view('User/edit', [
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'username' => $user->username,
+            ],
+            'title' => 'Edit Profile'
+        ]);
+    }
+
+    public function update(): void
+    {
+        $user = $this->session->current();
+
+        $name = $_POST['name'];
+        $username = $_POST['username'];
+
+        try {
+            $user->name = $name;
+            $user->username = $username;
+            $user->updateProfile();
+            View::redirect('/');
+        } catch (ValidationException $exception) {
+            View::render('User/edit', [
+                "title" => "Update user profile",
+                "error" => $exception->getMessage(),
+                "user" => [
+                    "name" => $_POST['name'],
+                    "username" => $_POST['username']
+                ]
             ]);
         }
     }
